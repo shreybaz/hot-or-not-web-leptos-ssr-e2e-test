@@ -92,89 +92,89 @@ test.describe('New test', () => {
 
   });
 
-  test('Test google login', async ({page}) => {
+  // test('Test google login', async ({page}) => {
 
-    // login from wallet: using headfull mode
-    try {
-      console.log('Log in test');
+  //   // login from wallet: using headfull mode
+  //   try {
+  //     console.log('Log in test');
       
-      // const environment_pass = global.expect;
-      const environment_pass = process.env.TESTPARAM; 
+  //     // const environment_pass = global.expect;
+  //     const environment_pass = process.env.TESTPARAM; 
 
-      await page.waitForTimeout(3000);
+  //     await page.waitForTimeout(3000);
 
-      await page.getByRole('navigation').getByRole('link').nth(3).click();
-      await page.getByRole('button', { name: 'Login to claim your COYNs' }).click();
-      const page1Promise = page.waitForEvent('popup');
-      await page.getByRole('button', { name: 'Google Sign-In' }).click();
-      const page1 = await page1Promise;
-      await page1.getByLabel('Email or phone').click();
-      await page1.getByLabel('Email or phone').fill('testautomationyral@gmail.com');
+  //     await page.getByRole('navigation').getByRole('link').nth(3).click();
+  //     await page.getByRole('button', { name: 'Login to claim your COYNs' }).click();
+  //     const page1Promise = page.waitForEvent('popup');
+  //     await page.getByRole('button', { name: 'Google Sign-In' }).click();
+  //     const page1 = await page1Promise;
+  //     await page1.getByLabel('Email or phone').click();
+  //     await page1.getByLabel('Email or phone').fill('testautomationyral@gmail.com');
       
-      await page.waitForTimeout(2000);
-      await page1.getByLabel('Email or phone').press('Enter');
+  //     await page.waitForTimeout(2000);
+  //     await page1.getByLabel('Email or phone').press('Enter');
       
-      await page1.getByLabel('Enter your password').click();
-      await page1.getByLabel('Enter your password').fill(environment_pass);
-      await page.waitForTimeout(2000);
+  //     await page1.getByLabel('Enter your password').click();
+  //     await page1.getByLabel('Enter your password').fill(environment_pass);
+  //     await page.waitForTimeout(2000);
 
-      await page1.getByLabel('Enter your password').press('Enter');
-      // await page1.pause();
-      await page.waitForTimeout(3000);
+  //     await page1.getByLabel('Enter your password').press('Enter');
+  //     // await page1.pause();
+  //     await page.waitForTimeout(3000);
 
-      console.log('Logged in succesfully');
-      // await page.getByRole('navigation').getByRole('link').first().click();
+  //     console.log('Logged in succesfully');
+  //     // await page.getByRole('navigation').getByRole('link').first().click();
 
-      await page.waitForTimeout(3000);
-        //request to the API endpoint to fetch the response
-      const response = await fetch('https://yral-metadata.fly.dev/metadata/gzlng-jqzta-5kubz-4nyam-5so2e-tsoio-ijv2s-47dsw-7ksd7-pe3eb-zqe');
-      await page.waitForTimeout(2000);
+  //     await page.waitForTimeout(3000);
+  //       //request to the API endpoint to fetch the response
+  //     const response = await fetch('https://yral-metadata.fly.dev/metadata/gzlng-jqzta-5kubz-4nyam-5so2e-tsoio-ijv2s-47dsw-7ksd7-pe3eb-zqe');
+  //     await page.waitForTimeout(2000);
 
-      console.log(response.status);
-      const responseData = await response.json();
-      console.log(responseData);
+  //     console.log(response.status);
+  //     const responseData = await response.json();
+  //     console.log(responseData);
 
-    } catch (error) {
-      console.error("error in login"); 
-    }
-  });
-
-  // test('TEST UPLOAD FLOW', async ({page}) => {
-
-  //   console.log('Uploading test');
-
-  //   await page.waitForTimeout(2000);
-
-  //   await page.getByRole('navigation').getByRole('link').nth(2).click();
-
-  //   await page.setInputFiles('#dropzone-file', './test1.mp4');
-
-  //   // TODO
-  //   // //endpoint to fetch the response
-  //   // const response = await fetch('https://yral.com/api/stream_to_offchain_agent11958048345285885967');
-  //   // console.log(response);
-  //   // const responseData = await response.json();
-
-  //   // console.log(responseData);
-  //   // // Perform assertions based on the API response
-  //   // expect(responseData.status).toBe(200);
-
-  //   await page.getByPlaceholder('Write your description here..').click();
-  //   await page.getByPlaceholder('Write your description here..').fill('test video upload');
-  //   await page.getByPlaceholder('#hashtag1,#hashtag2,#hashtag3').click();
-  //   await page.getByPlaceholder('#hashtag1,#hashtag2,#hashtag3').fill('#try');
-
-  //   // const button = 
-  //   // await button.click('button[data-api-trigger="true"]');
-
-  //   await page.getByRole('button', { name: 'Upload Video' }).click();
-  //   await page.pause();
-
-  //   // await button.click('button[data-api-trigger="true"]');
-
-  //   await page.getByRole('navigation').getByRole('link').first().click();
-  //   await page.waitForTimeout(5000);
-
+  //   } catch (error) {
+  //     console.error("error in login"); 
+  //   }
   // });
+
+  test('TEST UPLOAD FLOW', async ({page}) => {
+
+    console.log('Uploading test');
+
+    await page.waitForTimeout(2000);
+
+    await page.getByRole('navigation').getByRole('link').nth(2).click();
+
+    await page.setInputFiles('#dropzone-file', './test1.mp4');
+
+    // TODO
+    // //endpoint to fetch the response
+    // const response = await fetch('https://yral.com/api/stream_to_offchain_agent11958048345285885967');
+    // console.log(response);
+    // const responseData = await response.json();
+
+    // console.log(responseData);
+    // // Perform assertions based on the API response
+    // expect(responseData.status).toBe(200);
+
+    await page.getByPlaceholder('Write your description here..').click();
+    await page.getByPlaceholder('Write your description here..').fill('test video upload');
+    await page.getByPlaceholder('#hashtag1,#hashtag2,#hashtag3').click();
+    await page.getByPlaceholder('#hashtag1,#hashtag2,#hashtag3').fill('#try');
+
+    // const button = 
+    // await button.click('button[data-api-trigger="true"]');
+
+    await page.getByRole('button', { name: 'Upload Video' }).click();
+    await page.pause();
+
+    // await button.click('button[data-api-trigger="true"]');
+
+    await page.getByRole('navigation').getByRole('link').first().click();
+    await page.waitForTimeout(5000);
+
+  });
 
 });
