@@ -1,0 +1,47 @@
+name: Generate lighthouse test report on PR
+on:
+    push: 
+      branches: [ main ]
+    pull_request:
+        branches: [ main ]
+        
+jobs:
+    automation-test:
+        runs-on: ubuntu-latest
+        env: 
+            COOKIE_KEY: '1267b291500365c42043e04bc69cf24a31495bd8936fc8d6794283675e288fad755971922d45cf1ca0b438df4fc847f39cb0b2aceb3a45673eff231cddb88dc9'
+
+        steps:
+          - name: Checkout repo
+            uses: actions/checkout@v3
+
+          - name: Install Node.js
+            uses: actions/setup-node@v4
+            with: 
+                node-version: 20
+          - run: npm install
+
+          - name: Install Lighthouse
+            run: npm install -g @lhci/cli@0.13.x
+
+          - name: Run Lighthouse
+            # run: lhci autorun --upload.githubToken="$LHCI_GITHUB_TOKEN" || echo "LHCI failed!"
+            run: lhci autorun 
+            # env: 
+            #     LHCI_GITHUB_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+
+          - name: install playwright
+            run: npx playwright install    
+
+          - name: run playwright
+            id: tests
+            # run: TESTPARAM=${{secrets.MAIL_PASSWORD}} npx playwright test --project=firefox
+            run: npx playwright test --project=firefox
+
+          # - name: Check test result and comment
+          #   uses: peter-evans/create-or-update-comment@v1
+          #   with:
+          #     token: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+          #     issue-number: ${{ github.event.pull_request.number }}
+          #     body: |
+          #       ${{ steps.tests.outcome == '2 passed' && 'Test passed :heavy_check_mark:' || 'Test failed, Please check logs for details.' }}
