@@ -19,28 +19,28 @@ jobs:
                 node-version: 20
           - run: npm install
 
-          - uses: actions/checkout@master
-          - run: mkdir -p ${{ github.workspace }}/tmp/artifacts
-          - name: Lighthouse
-            uses: foo-software/lighthouse-check-action@master
-            with:
-              outputDirectory: ${{ github.workspace }}/tmp/artifacts
-              gitHubAccessToken: ${{ secrets.GITHUB_APP_TOKEN }}
-              urls: 'https://yral.com/'
-          - name: Upload artifacts
-            uses: actions/upload-artifact@master
-            with:
-              name: Lighthouse reports
-              path: ${{ github.workspace }}/tmp/artifacts
+          # - uses: actions/checkout@master
+          # - run: mkdir -p ${{ github.workspace }}/tmp/artifacts
+          # - name: Lighthouse
+          #   uses: foo-software/lighthouse-check-action@master
+          #   with:
+          #     outputDirectory: ${{ github.workspace }}/tmp/artifacts
+          #     gitHubAccessToken: ${{ secrets.GITHUB_APP_TOKEN }}
+          #     urls: 'https://yral.com/'
+          # - name: Upload artifacts
+          #   uses: actions/upload-artifact@master
+          #   with:
+          #     name: Lighthouse reports
+          #     path: ${{ github.workspace }}/tmp/artifacts
 
           - name: Install Lighthouse
             run: npm install -g @lhci/cli@0.13.x
 
           - name: Run Lighthouse
             id: lhcitests
-            run: lhci autorun --upload.githubToken="$LHCI_GITHUB_TOKEN" || echo "LHCI failed!"
-            env: 
-                LHCI_GITHUB_TOKEN: ${{ secrets.GITHUB_APP_TOKEN }}
+            run: lhci autorun 
+            # env: 
+                # LHCI_GITHUB_TOKEN: ${{ secrets.GITHUB_APP_TOKEN }}
 
           - name: install playwright
             run: npx playwright install    
