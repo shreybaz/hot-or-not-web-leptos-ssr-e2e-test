@@ -19,35 +19,25 @@ jobs:
                 node-version: 20
           - run: npm install
 
-          # - uses: actions/checkout@master
-          # - run: mkdir -p ${{ github.workspace }}/tmp/artifacts
-          # - name: Lighthouse
-          #   uses: foo-software/lighthouse-check-action@master
-          #   with:
-          #     outputDirectory: ${{ github.workspace }}/tmp/artifacts
-          #     gitHubAccessToken: ${{ secrets.GITHUB_APP_TOKEN }}
-          #     urls: 'https://yral.com/'
-          # - name: Upload artifacts
-          #   uses: actions/upload-artifact@master
-          #   with:
-          #     name: Lighthouse reports
-          #     path: ${{ github.workspace }}/tmp/artifacts
-
-          - name: Install Lighthouse
-            run: npm install -g @lhci/cli@0.13.x
-
-          - name: Run Lighthouse
-            id: lhcitests
-            run: lhci autorun 
-            # env: 
-                # LHCI_GITHUB_TOKEN: ${{ secrets.GITHUB_APP_TOKEN }}
+          - uses: actions/checkout@master
+          - run: mkdir -p ${{ github.workspace }}/tmp/artifacts
+          - name: Lighthouse
+            uses: foo-software/lighthouse-check-action@master
+            with:
+              outputDirectory: ${{ github.workspace }}/tmp/artifacts
+              gitHubAccessToken: ${{ secrets.POST_DEPLOY_TARGET_GITHUB_APP_TOKEN }}
+              urls: 'https://yral.com/'
+          - name: Upload artifacts
+            uses: actions/upload-artifact@master
+            with:
+              name: Lighthouse reports
+              path: ${{ github.workspace }}/tmp/artifacts
 
           - name: install playwright
             run: npx playwright install    
 
           - name: run playwright
             id: tests
-            # run: TESTPARAM=${{secrets.MAIL_PASSWORD}} npx playwright test --project=firefox
             run: npx playwright test --project=firefox
             continue-on-error: true
 
@@ -55,7 +45,7 @@ jobs:
             uses: Co-qn/google-chat-notification@v1
             with:
               name: test
-              url: ${{ secrets.TEST_WEBHOOK_URL }}
+              url: ${{ secrets.TEST_GOOGLE_CHAT_WEBHOOK_URL }}
               status: ${{ steps.tests.outcome }}
 
           # - name: Check test result and comment
@@ -76,4 +66,4 @@ jobs:
                     event_type: 'call',
                     client_payload: { key: "value" }
                   });
-                github-token: ${{ secrets.GITHUB_APP_TOKEN }}
+                github-token: ${{ secrets.POST_DEPLOY_TARGET_GITHUB_APP_TOKEN }}
