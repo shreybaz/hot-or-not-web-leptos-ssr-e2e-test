@@ -22,7 +22,7 @@ jobs:
 
           - name: run playwright
             id: tests
-            run:  TESTPARAM= ${{ secrets.TESTING_MAIL_PASSWORD }} npx playwright test --project=firefox
+            run:  TESTPARAM='${{ secrets.TESTING_MAIL_PASSWORD }}' npx playwright test --project=firefox
             continue-on-error: true
 
           - name: Notify on Google Chat 

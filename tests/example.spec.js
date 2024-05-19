@@ -112,12 +112,12 @@ test.describe('New test', () => {
       await page1.getByLabel('Email or phone').click();
       await page1.getByLabel('Email or phone').fill('yraltesting@gobazzinga.io');
       
-      // await page.waitForTimeout(2000);
+      await page.waitForTimeout(2000);
       await page1.getByLabel('Email or phone').press('Enter');
       
       await page1.getByLabel('Enter your password').click();
       await page1.getByLabel('Enter your password').fill(environment_pass);
-      // await page.waitForTimeout(2000);
+      await page.waitForTimeout(2000);
 
       await page1.getByLabel('Enter your password').press('Enter');
       // await page1.pause();
