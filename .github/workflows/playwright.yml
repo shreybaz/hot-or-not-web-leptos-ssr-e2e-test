@@ -2,6 +2,8 @@ name: Generate lighthouse test report on PR
 on:
     pull_request:
         branches: [ main ]
+    repository_dispatch:
+        types: [call]
         
 jobs:
     automation-test:
