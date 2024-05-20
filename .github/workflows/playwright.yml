@@ -27,6 +27,14 @@ jobs:
             run:  TESTPARAM='${{ secrets.TESTING_MAIL_PASSWORD }}' npx playwright test --project=firefox
             continue-on-error: true
 
+          # add playwright test report artifact to pipeline 
+          - uses: actions/upload-artifact@v4
+            if: always()
+            with:
+              name: playwright-report
+              path: playwright-report/
+              retention-days: 30
+
           - name: Notify on Google Chat 
             uses: Co-qn/google-chat-notification@v1
             with:
@@ -56,16 +64,3 @@ jobs:
             with:
               name: Lighthouse reports
               path: ${{ github.workspace }}/tmp/artifacts
-
-
-          - name: Trigger a workflow in another repo
-            uses: actions/github-script@v5
-            with:
-                script: |
-                  github.rest.repos.createDispatchEvent({
-                    owner: 'shreybaz',
-                    repo: 'test_automation',
-                    event_type: 'call',
-                    client_payload: { key: "value" }
-                  });
-                github-token: ${{ secrets.POST_DEPLOY_TARGET_GITHUB_APP_TOKEN }}
