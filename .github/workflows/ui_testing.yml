@@ -24,7 +24,7 @@ jobs:
 
           - name: run playwright
             id: tests
-            run:  TESTPARAM='${{ secrets.TESTING_MAIL_PASSWORD }}' npx playwright test --project=firefox
+            run:  TESTPARAM='${{ secrets.TESTING_MAIL_PASSWORD }}' npx playwright test --project=firefox --workers=5
             continue-on-error: true
 
           # add playwright test report artifact to pipeline 
