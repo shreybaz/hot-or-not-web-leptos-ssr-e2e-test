@@ -1,7 +1,7 @@
 name: Generate lighthouse test report on PR
 on:
-    pull_request:
-        branches: [ main ]
+    push:
+        branches: [ main, master ]
     repository_dispatch:
         types: [call]
         
@@ -35,6 +35,7 @@ jobs:
           #     path: playwright-report/
           #     retention-days: 30
 
+
           # - name: Notify on Google Chat 
           #   uses: Co-qn/google-chat-notification@v1
           #   with:
@@ -64,3 +65,11 @@ jobs:
           #   with:
           #     name: Lighthouse reports
           #     path: ${{ github.workspace }}/tmp/artifacts
+
+          - name: Repository Dispatch
+            run: |
+              curl -X POST https://api.github.com/repos/shreybaz/test_automation/dispatches \
+              -H 'Accept: application/vnd.github+json' \
+              -H 'Authorization: token ${{ secrets.TEST_FINE_G_PAT }}' \
+              -d '{"event_type": "call"}'
+
