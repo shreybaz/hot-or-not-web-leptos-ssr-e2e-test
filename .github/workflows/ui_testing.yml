@@ -35,6 +35,7 @@ jobs:
           #     path: playwright-report/
           #     retention-days: 30
 
+
           # - name: Notify on Google Chat 
           #   uses: Co-qn/google-chat-notification@v1
           #   with:
@@ -42,13 +43,13 @@ jobs:
           #     url: ${{ secrets.TEST_GOOGLE_CHAT_WEBHOOK_URL }}
           #     status: ${{ steps.tests.outcome }}
 
-          # - name: Check test result and comment
-          #   uses: peter-evans/create-or-update-comment@v1
-          #   with:
-          #     token: ${{ secrets.GITHUB_APP_TOKEN }}
-          #     issue-number: ${{ github.event.pull_request.number }}
-          #     body: |
-          #       ${{ steps.tests.outcome == 'failed' && 'Test failed, Please check logs for details.' || 'Test passed :heavy_check_mark:'  }}
+          # # - name: Check test result and comment
+          # #   uses: peter-evans/create-or-update-comment@v1
+          # #   with:
+          # #     token: ${{ secrets.GITHUB_APP_TOKEN }}
+          # #     issue-number: ${{ github.event.pull_request.number }}
+          # #     body: |
+          # #       ${{ steps.tests.outcome == 'failed' && 'Test failed, Please check logs for details.' || 'Test passed :heavy_check_mark:'  }}
 
 
           # - uses: actions/checkout@master
@@ -71,3 +72,4 @@ jobs:
               -H 'Accept: application/vnd.github+json' \
               -H 'Authorization: token ${{ secrets.TEST_FINE_G_PAT }}' \
               -d '{"event_type": "call"}'
+
