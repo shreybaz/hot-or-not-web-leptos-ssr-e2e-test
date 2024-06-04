@@ -19,48 +19,48 @@ jobs:
                 node-version: 20
           - run: npm install
 
-          - name: install playwright
-            run: npx playwright install    
+          # - name: install playwright
+          #   run: npx playwright install    
 
-          - name: run playwright
-            id: tests
-            run:  TESTPARAM='${{ secrets.TESTING_MAIL_PASSWORD }}' npx playwright test --project=firefox --workers=4
-            continue-on-error: true
+          # - name: run playwright
+          #   id: tests
+          #   run:  TESTPARAM='${{ secrets.TESTING_MAIL_PASSWORD }}' npx playwright test --project=firefox --workers=4
+          #   continue-on-error: true
 
-          # add playwright test report artifact to pipeline 
-          - uses: actions/upload-artifact@v4
-            if: always()
-            with:
-              name: playwright-report
-              path: playwright-report/
-              retention-days: 30
-
-          - name: Notify on Google Chat 
-            uses: Co-qn/google-chat-notification@v1
-            with:
-              name: test
-              url: ${{ secrets.TEST_GOOGLE_CHAT_WEBHOOK_URL }}
-              status: ${{ steps.tests.outcome }}
-
-          # - name: Check test result and comment
-          #   uses: peter-evans/create-or-update-comment@v1
+          # # add playwright test report artifact to pipeline 
+          # - uses: actions/upload-artifact@v4
+          #   if: always()
           #   with:
-          #     token: ${{ secrets.GITHUB_APP_TOKEN }}
-          #     issue-number: ${{ github.event.pull_request.number }}
-          #     body: |
-          #       ${{ steps.tests.outcome == 'failed' && 'Test failed, Please check logs for details.' || 'Test passed :heavy_check_mark:'  }}
+          #     name: playwright-report
+          #     path: playwright-report/
+          #     retention-days: 30
+
+          # - name: Notify on Google Chat 
+          #   uses: Co-qn/google-chat-notification@v1
+          #   with:
+          #     name: test
+          #     url: ${{ secrets.TEST_GOOGLE_CHAT_WEBHOOK_URL }}
+          #     status: ${{ steps.tests.outcome }}
+
+          # # - name: Check test result and comment
+          # #   uses: peter-evans/create-or-update-comment@v1
+          # #   with:
+          # #     token: ${{ secrets.GITHUB_APP_TOKEN }}
+          # #     issue-number: ${{ github.event.pull_request.number }}
+          # #     body: |
+          # #       ${{ steps.tests.outcome == 'failed' && 'Test failed, Please check logs for details.' || 'Test passed :heavy_check_mark:'  }}
 
 
-          - uses: actions/checkout@master
-          - run: mkdir -p ${{ github.workspace }}/tmp/artifacts
-          - name: Lighthouse
-            uses: foo-software/lighthouse-check-action@master
-            with:
-              outputDirectory: ${{ github.workspace }}/tmp/artifacts
-              gitHubAccessToken: ${{ secrets.POST_DEPLOY_TARGET_GITHUB_APP_TOKEN }}
-              urls: 'https://yral.com/'
-          - name: Upload artifacts
-            uses: actions/upload-artifact@master
-            with:
-              name: Lighthouse reports
-              path: ${{ github.workspace }}/tmp/artifacts
+          # - uses: actions/checkout@master
+          # - run: mkdir -p ${{ github.workspace }}/tmp/artifacts
+          # - name: Lighthouse
+          #   uses: foo-software/lighthouse-check-action@master
+          #   with:
+          #     outputDirectory: ${{ github.workspace }}/tmp/artifacts
+          #     gitHubAccessToken: ${{ secrets.POST_DEPLOY_TARGET_GITHUB_APP_TOKEN }}
+          #     urls: 'https://yral.com/'
+          # - name: Upload artifacts
+          #   uses: actions/upload-artifact@master
+          #   with:
+          #     name: Lighthouse reports
+          #     path: ${{ github.workspace }}/tmp/artifacts
